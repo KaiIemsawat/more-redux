@@ -1,7 +1,6 @@
 REDUX
 
-- in index.js, 
-
+    ** in 'index.js', 
     - import
     import {configureStore} from "@reduxjs/toolkit"
     import {Provider} from "react-redux"
@@ -20,3 +19,41 @@ REDUX
             </Provider>
         </React.StrictMode>
     );
+
+
+    - create 'feature/user.js' for 'reducers / slices'
+    ** in 'user.js',
+    - import
+    import {createSlice} from "@reduxjs/toolkit"
+
+    - create and export slices as below pattern // more information in the file
+    export const userSlice = createSlice({
+        name: "user",
+        initialState: {
+            value: {
+                name: "",
+                age: 0,
+                email: "",
+            },
+        },
+        reducers: {
+            login: (state, action) => {
+                state.value = action.payload;
+            },
+        },
+    });
+
+    - export reducer as default
+    export default userSlice.reducer;
+
+
+    ** in 'index.js',
+    - import reducer
+    import userReducer from "./features/user";
+
+    - add reducer to 'store'
+    const store = configureStore({
+        reducer: {
+            user: userReducer
+        },
+    });

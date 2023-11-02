@@ -5,9 +5,13 @@ import { Provider } from "react-redux";
 
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
+import userReducer from "./features/user";
 
 const store = configureStore({
-    reducer: {},
+    reducer: {
+        // for each reducer, create a new file with a new slice in 'feature folder'
+        user: userReducer,
+    },
 });
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
