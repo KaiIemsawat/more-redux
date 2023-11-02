@@ -26,15 +26,14 @@ REDUX
     - import
     import {createSlice} from "@reduxjs/toolkit"
 
+    - create 'initialStateValue'
+    const initialStateValue = { name: "", age: 0, email: "" };
+
     - create and export slices as below pattern // more information in the file
     export const userSlice = createSlice({
         name: "user",
         initialState: {
-            value: {
-                name: "",
-                age: 0,
-                email: "",
-            },
+            value: initialStateValue;
         },
         reducers: {
             login: (state, action) => {
@@ -43,13 +42,16 @@ REDUX
         },
     });
 
-    - export reducer as default
+    - exporting 'action' and 'reducer'
+    export const {login} = userSlice.actions
     export default userSlice.reducer;
 
 
     ** in 'index.js',
     - import reducer
     import userReducer from "./features/user";
+    // then put it in 'store'
+    // 'store' will be in 'Provider' which allow us to access the reducer 
 
     - add reducer to 'store'
     const store = configureStore({
@@ -63,7 +65,7 @@ REDUX
     - import
     import { useSelector } from "react-redux";
 
-    // useSelect - hook which is used to grab values of states
+    // ---- useSelect - hook which is used to access values of states ----
 
     create 'user' variable for state
     const user = useSelector((state) => state.user.value); // user comes from the name 'name: "user"' in 'features/user.js'
@@ -75,3 +77,62 @@ REDUX
             <p>Age : {user.age}</p>
             <p>Email : {user.email}</p>
         </div>
+
+    
+    ** in 'components/Login.js'
+    - import
+    import { useDispatch } from "react-redux";
+    import { login } from "../features/user"; // the action that just created
+
+    // ---- useDispatch - hook which is used to modify values of the states ----
+
+    - create 'dispatch' variable
+    const dispatch = useDispatch();
+
+    - apply dispatch (in this case, it's hardcode)
+        <div>
+            <button
+                onClick={() => {
+                    dispatch(login({name: "Zukkii", age: 6, email: "zukkii@email.com"})
+                    );
+                }}
+            >
+                login
+            </button>
+        </div>
+    once 'login' button is click, the value will change
+
+
+    ** in 'features/user.js'
+    - add 'logout' reducer
+    export const userSlice = createSlice({
+        name: "user",
+        initialState: {
+            value: initialStateValue;
+        },
+        reducers: {
+            login: (state, action) => {
+                state.value = action.payload;
+            },
+            logout: (state) => { // note, since we don't use 'action', it can be removed
+                state.value = initialStateValue;
+            },
+        },
+    });
+
+    - then export 'logout'
+    export const { login, logout } = userSlice.actions;
+
+
+    ** in 'components/login.js'
+    - import 'logout'
+    import { login, logout } from "../features/user";
+
+    - apply 'logout' to <button>
+        <button
+            onClick={() => {
+                dispatch(logout()); // logout doesn't take any payload
+            }}
+        >
+            LOGOUT
+        </button>

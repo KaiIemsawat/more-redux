@@ -6,6 +6,8 @@ import { Provider } from "react-redux";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import userReducer from "./features/user";
+// then put it in 'store'
+// 'store' will be in 'Provider' which allow us to access the reducer
 
 const store = configureStore({
     reducer: {
