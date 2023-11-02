@@ -8,11 +8,13 @@ import reportWebVitals from "./reportWebVitals";
 import userReducer from "./features/user";
 // then put it in 'store'
 // 'store' will be in 'Provider' which allow us to access the reducer
+import themeReducer from "./features/theme";
 
 const store = configureStore({
     reducer: {
         // for each reducer, create a new file with a new slice in 'feature folder'
         user: userReducer,
+        theme: themeReducer,
     },
 });
 
