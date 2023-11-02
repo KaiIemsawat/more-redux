@@ -57,3 +57,21 @@ REDUX
             user: userReducer
         },
     });
+
+
+    ** in 'components/Profile.js'
+    - import
+    import { useSelector } from "react-redux";
+
+    // useSelect - hook which is used to grab values of states
+
+    create 'user' variable for state
+    const user = useSelector((state) => state.user.value); // user comes from the name 'name: "user"' in 'features/user.js'
+
+    then we can access the value as below
+        <div>
+            <h1>Profile Page</h1>
+            <p>Name : {user.name}</p>
+            <p>Age : {user.age}</p>
+            <p>Email : {user.email}</p>
+        </div>
