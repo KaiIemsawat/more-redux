@@ -1,0 +1,22 @@
+REDUX
+
+- in index.js, 
+
+    - import
+    import {configureStore} from "@reduxjs/toolkit"
+    import {Provider} from "react-redux"
+
+    - create 'store' for reducers
+    const store = configureStore({
+        reducer: {},
+    });
+
+    - wrap <App /> with <Provider>
+    const root = ReactDOM.createRoot(document.getElementById("root"));
+    root.render(
+        <React.StrictMode>
+            <Provider store={store}>
+                <App />
+            </Provider>
+        </React.StrictMode>
+    );
