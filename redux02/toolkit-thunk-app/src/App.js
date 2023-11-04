@@ -1,7 +1,34 @@
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+
 import "./App.css";
+import { getPhotos } from "./state/galleryState";
 
 function App() {
-    return <div className="App"></div>;
+    const dispatch = useDispatch();
+    const photos = useSelector((state) => state.gallery.photos);
+
+    useEffect(() => {
+        dispatch(getPhotos());
+    }, [dispatch]);
+
+    console.log(photos);
+
+    return (
+        <div className="App">
+            <h1>PHOTO GALLERY</h1>
+            <p>
+                This is a photo gallery made using redux toolkit and redux thunk
+            </p>
+            <hr />
+            <div className="Gallery">
+                {/* {photos.map(photo => (
+                <img />
+              ))} */}
+            </div>
+            <button>VIEW MORE</button>
+        </div>
+    );
 }
 
 export default App;
