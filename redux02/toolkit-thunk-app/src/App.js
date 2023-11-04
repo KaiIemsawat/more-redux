@@ -22,9 +22,15 @@ function App() {
             </p>
             <hr />
             <div className="Gallery">
-                {/* {photos.map(photo => (
-                <img />
-              ))} */}
+                {photos.map((photo) => (
+                    <img
+                        key={photo.id}
+                        alt={photo.author}
+                        src={photo.download_url}
+                        width="400"
+                        height="400"
+                    />
+                ))}
             </div>
             <button>VIEW MORE</button>
         </div>
