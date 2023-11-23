@@ -1,11 +1,26 @@
 import asyncHandler from "express-async-handler";
 import User from "../models/userModel.js";
+import genToken from "../utils/generateToken.js";
 
 /* Auth user/set token */
 // route POST - /api/users/auth
 // @access Public
 const authUser = asyncHandler(async (req, res) => {
-    res.status(200).json({ message: "Auth User" });
+    const { email, password } = req.body;
+
+    const user = await User.findOne({ email });
+
+    if (user && (await user.matchPasswords(password))) {
+        genToken(res, user._id);
+        res.status(201).json({
+            _id: user._id,
+            name: user.name,
+            email: user.email,
+        });
+    } else {
+        res.status(401);
+        throw new Error("Invalid Credentials");
+    }
 });
 
 /* Register a new user */
@@ -28,6 +43,8 @@ const reggirterUer = asyncHandler(async (req, res) => {
     });
 
     if (user) {
+        genToken(res, user._id);
+
         res.status(201).json({
             _id: user._id,
             name: user.name,
