@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { Button, Col, Form, Row } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
+import { toast } from "react-toastify";
 
 import FormContainer from "../components/FormContainer";
 import { useLoginMutation } from "../slices/usersApiSlice";
@@ -41,7 +42,8 @@ const LoginScreen = () => {
             // navigate to home screen
             navigate("/");
         } catch (error) {
-            console.error(error?.data?.message || error.error);
+            // console.error(error?.data?.message || error.error);
+            toast.error(error?.data?.message || error.error);
         }
     };
     return (
