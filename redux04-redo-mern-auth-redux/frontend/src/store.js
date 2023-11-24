@@ -7,8 +7,11 @@ const store = configureStore({
         auth: authReducer,
         [apiSlice.reducerPath]: apiSlice.reducer,
     },
-    middleware: (getDefaultMiddleWare) => getDefaultMiddleWare(),
+    middleware: (getDefaultMiddleWare) =>
+        getDefaultMiddleWare().concat(apiSlice.middleware),
     devTools: true,
 });
 
 export default store;
+
+// getDefaultMiddleWare - Returns an array containing the default list of middleware.
