@@ -2,6 +2,7 @@ import express from "express";
 import dotenv from "dotenv";
 
 import userRoutes from "./routes/userRoutes.js";
+import { notFound, errorHandler } from "./middleware/errorMiddleware.js";
 
 dotenv.config();
 
@@ -12,6 +13,10 @@ const app = express();
 app.use("/api/users", userRoutes);
 
 app.get("/", (req, res) => res.send("Server is ready"));
+
+// Without using these middlewares, the error will come in HTML format (default)
+app.use(notFound);
+app.use(errorHandler);
 
 app.listen(port, () =>
     console.log(`SERVER HAS STARTED ON PORT ------- ${port}`)
