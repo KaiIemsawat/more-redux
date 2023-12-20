@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { Button, Col, Form, Row } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
+import { toast } from "react-toastify";
 
 import FormContainer from "../components/FormContainer";
 import { useLoginMutation } from "../slices/usersApiSlice";
@@ -27,11 +28,12 @@ const LoginScreen = () => {
     const submitHandler = async (e) => {
         e.preventDefault();
         try {
+            // With this try block, user will be redirected once login properly
             const res = await login({ email, password }).unwrap(); // 'login' comes from mutation
             dispatch(setCredentials({ ...res }));
             navigate("/");
         } catch (err) {
-            console.log(err?.data?.message || err.error);
+            toast.error(err?.data?.message || err.error);
         }
     };
     return (
