@@ -30,7 +30,7 @@ const LoginScreen = () => {
         try {
             // With this try block, user will be redirected once login properly
             const res = await login({ email, password }).unwrap(); // 'login' comes from mutation
-            dispatch(setCredentials({ ...res }));
+            dispatch(setCredentials({ ...res })); // dispatch is used with slice
             navigate("/");
         } catch (err) {
             toast.error(err?.data?.message || err.error);
