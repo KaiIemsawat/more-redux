@@ -1,16 +1,38 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button, Col, Form, Row } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 
 import FormContainer from "../components/FormContainer";
+import { useLoginMutation } from "../slices/usersApiSlice";
+import { setCredentials } from "../slices/authSlice";
 
 const LoginScreen = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
 
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
+
+    const [login, { isLoading }] = useLoginMutation();
+
+    const { userInfo } = useSelector((state) => state.auth); // from 'authSlice.js'
+
+    useEffect(() => {
+        if (userInfo) {
+            navigate("/");
+        }
+    }, [navigate, userInfo]);
+
     const submitHandler = async (e) => {
         e.preventDefault();
-        console.log("submit");
+        try {
+            const res = await login({ email, password }).unwrap(); // 'login' comes from mutation
+            dispatch(setCredentials({ ...res }));
+            navigate("/");
+        } catch (err) {
+            console.log(err?.data?.message || err.error);
+        }
     };
     return (
         <FormContainer>
@@ -22,7 +44,7 @@ const LoginScreen = () => {
                         type="email"
                         placeholder="email"
                         value={email}
-                        onChange={() => setEmail(e.target.value)}
+                        onChange={(e) => setEmail(e.target.value)}
                     ></Form.Control>
                 </Form.Group>
                 <Form.Group className="my-2" controlId="password">
@@ -31,7 +53,7 @@ const LoginScreen = () => {
                         type="password"
                         placeholder="password"
                         value={password}
-                        onChange={() => setPassword(e.target.value)}
+                        onChange={(e) => setPassword(e.target.value)}
                     ></Form.Control>
                 </Form.Group>
 

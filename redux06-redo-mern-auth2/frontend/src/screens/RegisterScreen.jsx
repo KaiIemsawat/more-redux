@@ -25,7 +25,7 @@ const RegisterScreen = () => {
                         type="text"
                         placeholder="name"
                         value={name}
-                        onChange={() => setName(e.target.value)}
+                        onChange={(e) => setName(e.target.value)}
                     ></Form.Control>
                 </Form.Group>
                 {/* Email */}
@@ -35,7 +35,7 @@ const RegisterScreen = () => {
                         type="email"
                         placeholder="email"
                         value={email}
-                        onChange={() => setEmail(e.target.value)}
+                        onChange={(e) => setEmail(e.target.value)}
                     ></Form.Control>
                 </Form.Group>
                 {/* Password */}
@@ -45,7 +45,7 @@ const RegisterScreen = () => {
                         type="password"
                         placeholder="password"
                         value={password}
-                        onChange={() => setPassword(e.target.value)}
+                        onChange={(e) => setPassword(e.target.value)}
                     ></Form.Control>
                 </Form.Group>
                 <Form.Group className="my-2" controlId="confirmPassword">
@@ -54,7 +54,7 @@ const RegisterScreen = () => {
                         type="password"
                         placeholder="confirm password"
                         value={confirmPassword}
-                        onChange={() => setConfirmPassword(e.target.value)}
+                        onChange={(e) => setConfirmPassword(e.target.value)}
                     ></Form.Control>
                 </Form.Group>
 
