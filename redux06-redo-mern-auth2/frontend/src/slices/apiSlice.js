@@ -7,3 +7,5 @@ export const apiSlice = createApi({
     tagTypes: ["User"],
     endpoints: (builder) => ({}),
 });
+
+// This slice work much like 'parent slice'
